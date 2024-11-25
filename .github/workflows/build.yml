@@ -11,8 +11,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      CROSVM_CONTAINER_CACHE: output
 
     steps:
     - name: Setup
@@ -22,7 +20,7 @@ jobs:
     - name: Create necessary directory
       run:  mkdir -p output
     - name: Build
-      run: ./tools/dev_container --clean /bin/bash -c "cargo build --features \"virgl_renderer,video-encoder,video-decoder,ffmpeg\"; cp -r /scratch/cargo_target/debug/crosvm /cache/artifacts;"
+      run: ./tools/dev_container --clean /bin/bash -c "cargo build --features \"virgl_renderer,video-encoder,video-decoder,ffmpeg\"; cp -r /scratch/cargo_target/debug/crosvm /workspace/output/artifacts;"
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4.4.3
       with:
