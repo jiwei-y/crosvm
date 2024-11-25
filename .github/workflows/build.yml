@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build
-      run: ./tools/dev_container cargo build --clean
+      run: ./tools/dev_container --clean cargo build
