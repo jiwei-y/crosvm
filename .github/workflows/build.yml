@@ -13,8 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Setup
+      uses: actions/checkout@v4
       with:
         submodules: recursive
+    - name: Launch shell from the development container
+      run: ./tools/dev_container --clean
     - name: Build
-      run: ./tools/dev_container --clean cargo build
+      run:  cargo build --features "virgl_renderer,video-encoder,video-decoder,ffmpeg"
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4.4.3
+      with:
+        path: /scratch/cargo_target/debug/crosvm
+        if-no-files-found: error
+        overwrite: true
