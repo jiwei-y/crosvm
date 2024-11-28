@@ -1792,13 +1792,16 @@ pub struct RunCommand {
     /// PCI parameters.
     ///
     /// Possible key values:
-    ///     mem=[start=INT,size=INT] - region for non-prefetchable PCI device memory below 4G
+    ///     mem=[start=INT,size=INT] - region for non-prefetchable
+    ///         PCI device memory below 4G
     ///
     /// Possible key values (aarch64 only):
-    ///     cam=[start=INT,size=INT] - region for PCI Configuration Access Mechanism
+    ///     cam=[start=INT,size=INT] - region for PCI Configuration
+    ///         Access Mechanism
     ///
     /// Possible key values (x86_64 only):
-    ///     ecam=[start=INT,size=INT] - region for PCIe Enhanced Configuration Access Mechanism
+    ///     ecam=[start=INT,size=INT] - region for PCIe Enhanced
+    ///         Configuration Access Mechanism
     pub pci: Option<PciConfig>,
 
     #[cfg(any(target_os = "android", target_os = "linux"))]
@@ -2142,7 +2145,10 @@ pub struct RunCommand {
     /// devices. Can be given more than once.
     /// Possible key values:
     ///     type=(stdout,syslog,sink,file) - Where to route the
-    ///        serial device
+    ///        serial device.
+    ///        Platform-specific options:
+    ///        On Unix: 'unix' (datagram) and 'unix-stream' (stream)
+    ///        On Windows: 'namedpipe'
     ///     hardware=(serial,virtio-console,debugcon,
     ///               legacy-virtio-console) - Which type of
     ///        serial hardware to emulate. Defaults to 8250 UART
@@ -2158,6 +2164,11 @@ pub struct RunCommand {
     ///        type=file
     ///     input=PATH - The path to the file to read from when not
     ///        stdin
+    ///     input-unix-stream - (Unix-only) Whether to use the given
+    ///        Unix stream socket for input as well as output.
+    ///        This flag is only valid when type=unix-stream and
+    ///        the socket path is specified with path=.
+    ///        Can't be passed when input is specified.
     ///     console - Use this serial device as the guest console.
     ///        Will default to first serial port if not provided.
     ///     earlycon - Use this serial device as the early console.
